@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addProductAction } from '../../redux/actions/productsActions';
 import NavBar from '../NavBar/NavBar';
-
+import Swal from 'sweetalert2';
 
 const NewProduct = (props) => {
 
@@ -20,10 +20,15 @@ const NewProduct = (props) => {
 
     const createProduct = (e) => {
         e.preventDefault();
-        addProduct(product).then(() => {
+        if (Number.isInteger(parseFloat(product.quantity))) {
+            product.quantity = parseInt(product.quantity);
+            addProduct(product).then(() => {
+                props.history.push("/products");
+            });
+        } else {
+            Swal.fire("Error", "A quantidade tem que ser um número inteiro!", "error");
+        }
 
-            props.history.push("/products");
-        });
 
     }
 

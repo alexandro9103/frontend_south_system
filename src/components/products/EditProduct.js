@@ -30,8 +30,6 @@ const EditProduct = (props) => {
     const updateProduct = (e) => {
         e.preventDefault();
 
-        console.log(parseInt(product.quantity));
-
         if (Number.isInteger(parseFloat(product.quantity))) {
             product.quantity = parseInt(product.quantity);
             updateProd(id, product).then(() => {
