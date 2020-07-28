@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Swal from "sweetalert2";
 import { deleteProductAction } from '../../redux/actions/productsActions';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 const Product = (props) => {
     //State
@@ -32,8 +32,11 @@ const Product = (props) => {
                                 'Sistema!',
                                 'Produto excluido com sucesso!',
                                 'success'
-                            );
-                        } else{
+                            ).then(() => {
+                                window.location.reload();
+                            });
+
+                        } else {
                             Swal.fire(
                                 'Sistema!',
                                 'O Produto não foi excluido!',
@@ -42,12 +45,6 @@ const Product = (props) => {
                         }
                     });
 
-
-                    Swal.fire(
-                        'Sistema!',
-                        'Produto excluido com sucesso!',
-                        'success'
-                    );
                 } catch (error) {
                     console.log(error);
                 }
@@ -82,4 +79,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Product);
+export default connect(null, mapDispatchToProps)(withRouter(Product));
