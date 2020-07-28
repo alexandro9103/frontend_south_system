@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { updateProductAction } from '../../redux/actions/productsActions';
 import { withRouter } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar';
-
-
-
+import Swal from 'sweetalert2';
 
 const EditProduct = (props) => {
 
@@ -31,9 +29,17 @@ const EditProduct = (props) => {
 
     const updateProduct = (e) => {
         e.preventDefault();
-        updateProd(id, product).then(() => {
-            props.history.push("/products");
-        });
+
+        console.log(parseInt(product.quantity));
+
+        if (Number.isInteger(parseFloat(product.quantity))) {
+            product.quantity = parseInt(product.quantity);
+            updateProd(id, product).then(() => {
+                props.history.push("/products");
+            });
+        } else {
+            Swal.fire("Error", "A quantidade tem que ser um número inteiro!", "error");
+        }
 
 
     }
@@ -71,7 +77,7 @@ const EditProduct = (props) => {
                         <div className="col-md-4">
 
                             <div className="form-group">
-                                <input type="text" required value={product.quantity} onChange={handleProduct} className="form-control" name="quantity" placeholder="Quantidade" />
+                                <input type="number" required value={product.quantity} pattern="^[0-9]+" onChange={handleProduct} className="form-control" name="quantity" placeholder="Quantidade" />
                             </div>
                         </div>
                     </div>
