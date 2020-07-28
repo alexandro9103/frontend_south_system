@@ -91,7 +91,7 @@ const EditProduct = (props) => {
                         <div className="col-md-4">
 
                             <div className="form-group">
-                                <input type="submit" className="btn btn-primary btn-block" value="Cadastrar" />
+                                <input type="submit" className="btn btn-primary btn-block" value="Atualizar" />
                             </div>
                         </div>
                     </div>
