@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axiosClient from '../../config/axios.config';
-
+import Swal from 'sweetalert2';
 const Login = (props) => {
 
     const [user, setUser] = useState({
@@ -20,14 +20,20 @@ const Login = (props) => {
 
         try {
             const resp = await axiosClient.post('/authenticate', user);
-            
+
             if (resp.data.token) {
                 localStorage.setItem("token", resp.data.token);
                 props.history.push('/products');
 
             }
         } catch (error) {
-            console.log(error);
+            if (!error.response.data.token) {
+                Swal.fire(
+                    'Sistema!',
+                    `${error.response.data.message}`,
+                    'error'
+                )
+            }
         }
     }
 
