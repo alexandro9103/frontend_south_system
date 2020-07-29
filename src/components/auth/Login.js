@@ -39,7 +39,7 @@ const Login = (props) => {
 
 
                     <div className="md-col-4 my-5 text-center">
-                        <h1>Seja bem vindo a South System</h1>
+                        <h1>Seja bem-vindo a South System</h1>
                     </div>
 
                     <div className="row">

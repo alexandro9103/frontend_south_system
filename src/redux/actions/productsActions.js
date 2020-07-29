@@ -48,8 +48,6 @@ export const addProductAction = (product) => async (dispatch) => {
     try {
         const token = localStorage.getItem('token');
         const resp = await axiosClient.post("/create-product", product, { headers: { token } });
-
-        console.log(resp.data.product);
         if (resp.data.product) {
             dispatch({
                 type: ADD_PRODUCT,
