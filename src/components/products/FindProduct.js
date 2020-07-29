@@ -5,8 +5,7 @@ import Product from './Product';
 //import Pagination from '../pagination/Pagination';
 import { findProductsAction } from '../../redux/actions/productsActions';
 import PaginationFind from '../pagination/PaginationFind';
-
-
+import Swal from 'sweetalert2';
 const FindProduct = (props) => {
 
     const [name, setName] = useState('');
@@ -19,7 +18,11 @@ const FindProduct = (props) => {
 
     const findProduct = (e) => {
         e.preventDefault();
-        findProd(name, 0, 5);
+        findProd(name, 0, 5).then(value => {
+            if (!value) {
+                Swal.fire("Error!", "Não foi achado nenhum produto com esse nome!", "error");
+            }
+        });
 
     }
 
@@ -69,7 +72,7 @@ const FindProduct = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    
+
     return {
         searchedProduct: state.products.searchedProduct,
         total: state.products.totalFound

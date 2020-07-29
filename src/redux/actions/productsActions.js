@@ -14,8 +14,10 @@ export const findProductsAction = (name, from, limit) => async (dispatch) => {
     try {
 
         const products = await axiosClient.get(`/find-products/${name}/${from}/${limit}`);
-        console.log(products.data);
-        //return;
+        if (products.data.total === 0) {
+            return false;
+        }
+
         dispatch({
             type: FIND_PRODUCTS,
             payload: {
@@ -23,6 +25,8 @@ export const findProductsAction = (name, from, limit) => async (dispatch) => {
                 totalFound: products.data.total
             },
         });
+
+        return true;
 
 
     } catch (error) {
@@ -55,11 +59,12 @@ export const addProductAction = (product) => async (dispatch) => {
                     product: resp.data.product,
                 },
             });
-            Swal.fire("Parabéns!", "O produto foi cadastrado com sucesso!", "success");
+            return true;
         }
 
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
+        return false;
     }
 };
 

@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 
 const NewProduct = (props) => {
 
-
     const { addProduct } = props;
 
     const [product, setProduct] = useState({
@@ -16,20 +15,24 @@ const NewProduct = (props) => {
         quantity: 0
     })
 
-
-
     const createProduct = (e) => {
         e.preventDefault();
         if (Number.isInteger(parseFloat(product.quantity))) {
             product.quantity = parseInt(product.quantity);
-            addProduct(product).then(() => {
+            addProduct(product).then((resp) => {
+                if (!resp) {
+                    Swal.fire("Sistema!", "O produto não foi cadastrado!", "error");
+
+                } else {
+                    Swal.fire("Parabéns!", "O produto foi cadastrado com sucesso!", "success");
+                }
                 props.history.push("/products");
+            }).catch(err => {
+                console.log(err);
             });
         } else {
             Swal.fire("Error", "A quantidade tem que ser um número inteiro!", "error");
         }
-
-
     }
 
     const handleProduct = (e) => {
